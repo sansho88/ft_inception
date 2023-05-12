@@ -5,17 +5,17 @@ RUN apt update -y \
 COPY my.cnf /etc/
 RUN chown -R mysql:mysql /var/lib/mysql
 
-RUN service mysql start
-
-#RUN mysql --bind-address="0.0.0.0"
-RUN mysql -uroot --execute="CREATE USER 'tgriffit'@'localhost' IDENTIFIED BY 42School ;" \
-&& mysql -uroot --execute="CREATE DATABASE IF NOT EXISTS dbName" \
-&& mysql -uroot --execute="GRANT ALL ON dbName.* TO 'tgriffit'@'localhost';"\
-&& mysql -uroot --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY 'P4ssw0rd';"
+#CMD ["mysqld_safe"]
 
 
-WORKDIR data
-COPY . .
-EXPOSE 3000
+#
+RUN service mysql start && mysql -u root -e "CREATE USER 'tgriffit'@'%' IDENTIFIED BY '42School';\
+CREATE DATABASE IF NOT EXISTS dbName ;\
+GRANT ALL PRIVILEGES ON dbName.* TO 'tgriffit'@'%';\
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'P4ssw0rd';"
+CMD ["mysqld", "--bind-address=0.0.0.0"]
 
-CMD ["mysqld_safe"]
+# WORKDIR data
+# COPY . .
+# EXPOSE 3000
+
