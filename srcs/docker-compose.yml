@@ -1,0 +1,34 @@
+version: '3.3'
+
+volumes:
+     mariadb-vol:
+     wp-vol:
+     nginx-vol:
+
+networks:
+    inception:
+        name: inception
+        driver: bridge
+
+services:
+    mariadb:
+        container_name: 'maria'
+        image: 'maria'
+        restart: on-failure
+        networks:
+            - inception
+       # command: 'mysql -hdatabase -uroot -prootpassword'
+        build:
+            context: requirements/mariadb/
+        volumes:
+            - mariadb-vol:/home/tgriffit/data/maria
+    wordpress:
+        container_name: 'wordpress'
+        restart: on-failure
+        build:
+            context:
+                requirements/wordpress
+        volumes:
+            - wp-vol:/var/www/html
+        networks:
+            - inception
