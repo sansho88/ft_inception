@@ -18,17 +18,30 @@ services:
         networks:
             - inception
        # command: 'mysql -hdatabase -uroot -prootpassword'
+        env_file: .env
         build:
             context: requirements/mariadb/
+            args:
+                - USER=$USER
+                - DB_NAME=$DB_NAME
+                - PASS_USER=$PASS_USER
+                - PASS_ROOT=$PASS_ROOT
         volumes:
             - mariadb-vol:/home/tgriffit/data/maria
+
+
     wordpress:
         container_name: 'wordpress'
         restart: on-failure
         build:
-            context:
-                requirements/wordpress
+            context: requirements/wordpress
+            args:
+                - USER
+                - PASS_USER
+                - PASS_ROOT
+                - DB_NAME
         volumes:
             - wp-vol:/var/www/html
         networks:
             - inception
+        env_file: .env
