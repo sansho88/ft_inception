@@ -1,7 +1,7 @@
 FROM debian:buster
 # MARIA DB
 RUN apt update -y \
-&& apt install -y mariadb-client php-fpm php-mysql php-gd php-curl curl php-zip php-xml php-mbstring
+&& apt install -y mariadb-client php-fpm php-mysql php-gd php-curl curl php-zip php-xml php-mbstring php-fpm sendmail
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN php wp-cli.phar --info
 RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
