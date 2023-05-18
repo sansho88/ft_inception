@@ -2,8 +2,11 @@ version: '3.3'
 
 volumes:
      mariadb-vol:
+         name: mariadb-vol
      wp-vol:
+         name: wordpress-vol
      nginx-vol:
+         name: nginx-vol
 
 networks:
     inception:
@@ -12,8 +15,8 @@ networks:
 
 services:
     mariadb:
-        container_name: 'maria'
-        image: 'maria'
+        container_name: 'mariadb'
+        image: 'mariadb'
         restart: on-failure
         networks:
             - inception
@@ -27,7 +30,7 @@ services:
                 - PASS_USER=$PASS_USER
                 - PASS_ROOT=$PASS_ROOT
         volumes:
-            - mariadb-vol:/home/tgriffit/data/maria
+            - mariadb-vol:/home/tgriffit/data/mariadb
 
 
     wordpress:
