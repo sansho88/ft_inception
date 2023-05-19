@@ -16,7 +16,7 @@ networks:
 services:
     mariadb:
         container_name: 'mariadb'
-        image: 'mariadb'
+        image: 'mariadb:ft_1.0'
         restart: on-failure
         networks:
             - inception
@@ -35,6 +35,7 @@ services:
 
     wordpress:
         container_name: 'wordpress'
+        image: 'wordpress:ft_2.0'
         restart: on-failure
         build:
             context: requirements/wordpress
@@ -43,6 +44,7 @@ services:
                 - PASS_USER
                 - PASS_ROOT
                 - DB_NAME
+                - WP_PATH:/var/www/html
         volumes:
             - wp-vol:/var/www/html
         networks:
