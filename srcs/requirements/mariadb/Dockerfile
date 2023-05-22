@@ -5,6 +5,7 @@ ARG PASS_ROOT
 ARG DB_NAME
 
 # MARIA DB
+EXPOSE 3306
 RUN apt update -y \
 && apt install -y mariadb-server mariadb-client
 COPY conf/my.cnf /etc/

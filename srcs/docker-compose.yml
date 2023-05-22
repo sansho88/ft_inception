@@ -4,9 +4,7 @@ volumes:
      mariadb-vol:
          name: mariadb-vol
      wp-vol:
-         name: wordpress-vol
-     nginx-vol:
-         name: nginx-vol
+         name: web-vol
 
 networks:
     inception:
@@ -20,7 +18,6 @@ services:
         restart: on-failure
         networks:
             - inception
-       # command: 'mysql -hdatabase -uroot -prootpassword'
         env_file: .env
         build:
             context: requirements/mariadb/
@@ -30,23 +27,51 @@ services:
                 - PASS_USER=$PASS_USER
                 - PASS_ROOT=$PASS_ROOT
         volumes:
-            - mariadb-vol:/home/tgriffit/data/mariadb
-
+            - mariadb-vol:/var/lib/mariadb
+        ports:
+            - 3306:3306
 
     wordpress:
         container_name: 'wordpress'
         image: 'wordpress:ft_2.0'
         restart: on-failure
+        depends_on:
+            - mariadb
         build:
-            context: requirements/wordpress
+            context: requirements/wordpress/
             args:
                 - USER
                 - PASS_USER
                 - PASS_ROOT
                 - DB_NAME
+                - URL
                 - WP_PATH:/var/www/html
         volumes:
             - wp-vol:/var/www/html
         networks:
             - inception
+        ports:
+            - 9000:9000
         env_file: .env
+
+    nginx:
+            container_name: 'nginx'
+            image: 'nginx:ft_3.0'
+            restart: on-failure
+            depends_on:
+                - wordpress
+            build:
+                context: requirements/nginx/
+                args:
+                    - USER
+                    - PASS_USER
+                    - PASS_ROOT
+                    - DB_NAME
+                    - WP_PATH:/var/www/html
+            volumes:
+                - wp-vol:/var/www/html
+            ports:
+                - 443:443
+            networks:
+                - inception
+            env_file: .env
