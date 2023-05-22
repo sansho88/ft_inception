@@ -9,7 +9,8 @@ RUN openssl req -newkey rsa:4096 -x509 -nodes \
 RUN apt install -y nginx
 #COPY conf/default /etc/nginx/sites-available/
 COPY conf/default /etc/nginx/conf.d/nginx.conf
-RUN ln -s /etc/nginx/conf.d/nginx.conf /etc/nginx/sites-available/
+RUN ln -s /etc/nginx/conf.d/nginx.conf /etc/nginx/sites-enabled/
+#RUN ln -s /etc/nginx/conf.d/nginx.conf /etc/nginx/sites-available/
 #RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/tgriffit.42.fr.conf
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
