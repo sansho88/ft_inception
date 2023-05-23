@@ -2,9 +2,20 @@ version: '3.3'
 
 volumes:
      mariadb-vol:
-         name: mariadb-vol
+        name: mariadb-vol
+        driver: local
+        driver_opts:
+            type: 'none'
+            o: 'bind'
+            device: '/home/tgriffit/data/mariadb'
+
      wp-vol:
          name: web-vol
+         driver: local
+         driver_opts:
+             type: 'none'
+             o: 'bind'
+             device: '/home/tgriffit/data/wordpress'
 
 networks:
     inception:

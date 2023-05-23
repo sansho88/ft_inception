@@ -13,6 +13,8 @@ start:
 stop:
 	${DOCK_COMP} stop
 up:
+	mkdir -p /home/tgriffit/data/wordpress
+	mkdir -p /home/tgriffit/data/mariadb
 	${DOCK_COMP} up -d
 down:
 	${DOCK_COMP} down
@@ -22,6 +24,7 @@ status:
 
 delete: down
 	docker system prune -f --volumes
+	sudo rm -rf /home/${USER}/data/wordpress /home/${USER}/data/mariadb
 re: delete all
 logs:
 	${DOCK_COMP} logs
