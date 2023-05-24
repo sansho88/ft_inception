@@ -10,18 +10,9 @@ RUN mkdir -p /var/www/html
 WORKDIR /var/www/html
 COPY conf/* /etc/php/7.3/fpm/pool.d
 COPY create-config.sh /tmp/
-#CMD ["/bin/sh", "/tmp/create-config.sh"]
 RUN chmod +x /tmp/create-config.sh
 ARG USER
 ARG WP_PATH
 ARG URL
 RUN adduser --disabled-password "$USER"
 CMD ["sh", "/tmp/create-config.sh"]
-
-
-#CMD ["mysqld", "--bind-address=0.0.0.0"]
-
-
-# WORKDIR data
-# COPY . .
-

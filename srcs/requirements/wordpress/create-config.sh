@@ -4,7 +4,6 @@ then
     echo "==> ${DB_NAME} is created ! "
     wp core download --allow-root
     wp config create --allow-root --dbname=${DB_NAME} --dbuser=${USER} --dbpass=${PASS_USER} --dbhost=mariadb --extra-php --force --skip-check
-
     echo "==> Wordpress config file created"
     wp core install --path=${WP_PATH} --allow-root  --skip-email --url=${URL} --title="My Awesome Wordpress Website" --admin_user=$USER --admin_password=${PASS_USER} --admin_email=${USER}@student.42lyon.fr
     chmod -R +rwx ${WP_PATH}
@@ -20,5 +19,6 @@ echo "==> Wordpress is started up."
 mkdir -p /run/php/
 echo "==> Test of php-fpm:"
 php-fpm7.3 -t
-echo "==> You can access to the $URL website! "
+echo "==> You can have access to the https://$URL website! "
 php-fpm7.3 -F
+exit

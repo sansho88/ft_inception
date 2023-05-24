@@ -14,8 +14,6 @@ RUN service mysql start && mysql -u root -e "CREATE USER '$USER'@'%' IDENTIFIED 
 CREATE DATABASE IF NOT EXISTS $DB_NAME ;\
 GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$USER'@'%';\
 ALTER USER 'root'@'localhost' IDENTIFIED BY '$PASS_ROOT';"
-#CMD est une commande bloquante. Pour Wordpress, faire un autre Dockerfile.
-#Pour faire un autre Dockerfile, creer l'arborescence demandee par le sujet
 RUN service mysql stop
 CMD ["mysqld", "--bind-address=0.0.0.0"]
 
