@@ -10,7 +10,6 @@ RUN apt update -y \
 && apt install -y mariadb-server mariadb-client
 COPY conf/my.cnf /etc/
 RUN chown -R mysql:mysql /var/lib/mysql
-RUN echo $USER
 RUN service mysql start && mysql -u root -e "CREATE USER '$USER'@'%' IDENTIFIED BY '$PASS_USER';\
 CREATE DATABASE IF NOT EXISTS $DB_NAME ;\
 GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$USER'@'%';\
