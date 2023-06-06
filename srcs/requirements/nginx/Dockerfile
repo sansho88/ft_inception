@@ -6,9 +6,10 @@ RUN openssl req -newkey rsa:4096 -x509 -nodes \
 	-keyout /etc/ssl/private/sslkey.key -out /etc/ssl/certs/sslcert.crt \
 	-subj="/C=FR/ST=AURA/L=Lyon/O=42LyonAuvergneRhoneAlpes/OU=Student/CN=localhost"
 RUN apt install -y nginx
-#COPY conf/default /etc/nginx/sites-available/
 COPY conf/default /etc/nginx/conf.d/nginx.conf
 RUN ln -s /etc/nginx/conf.d/nginx.conf /etc/nginx/sites-enabled/
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
-
+#
+# FROM debian:buster
+# ENV DEBIAN_FRONTEND noninteractive

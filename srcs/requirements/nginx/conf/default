@@ -1,18 +1,20 @@
-#Inception's server
+# Inception's server
+# IPv4
 server{
 	listen 443 ssl;
-	listen [::]:443 ssl;
+	 listen [::]:443 ssl;
 
-	ssl				on;
-	ssl_protocols	TLSv1.3;
+	#ssl				on;
+	ssl_protocols	TLSv1.2 TLSv1.3;
 	ssl_certificate /etc/ssl/certs/sslcert.crt;
 	ssl_certificate_key /etc/ssl/private/sslkey.key;
 
 	server_name tgriffit.42.fr;
-	root /var/www/html/;
+	root /var/www/html;
+
 
 	# Emable HSTS. This forces SSL on clients that respect it, most modern browsers.
-	add_header Strict-Transport-Security "max-age=31536000";
+	add_header Strict-Transport-Security "max-age=365";
 
 	location ~ \.php$ {
 		try_files		$uri $uri/ =404;
@@ -23,11 +25,13 @@ server{
 		fastcgi_param	SCRIPT_FILENAME $document_root$fastcgi_script_name;
 		fastcgi_param	SCRIPT_NAME $fastcgi_script_name;
 		fastcgi_param	PATH_INFO $fastcgi_path_info;
+		client_max_body_size 20m;
+		client_body_timeout 10s;
 	}
 
 	location / {
-			try_files		$uri $uri/ =404;
-			index			index.php index.html;
+			try_files		$uri $uri/ /index.php$is_args$args; #=404;
+			index			index.php index.nginx-debian.html; #index.html;
 			autoindex		on;
 		}
 }

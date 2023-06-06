@@ -14,12 +14,6 @@ RUN service mysql start && mysql -u root -e "CREATE USER '$USER'@'%' IDENTIFIED 
 CREATE DATABASE IF NOT EXISTS $DB_NAME ;\
 GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$USER'@'%';\
 ALTER USER 'root'@'localhost' IDENTIFIED BY '$PASS_ROOT';"
-RUN service mysql stop
+#RUN service mysql stop
 CMD ["mysqld", "--bind-address=0.0.0.0"]
-
-
-
-# WORKDIR data
-# COPY . .
-# EXPOSE 3000
 

@@ -27,6 +27,7 @@ services:
         container_name: 'mariadb'
         image: 'mariadb:ft_1.0'
         restart: on-failure
+        cpus: 2
         networks:
             - inception
         env_file: .env
@@ -39,19 +40,19 @@ services:
                 - PASS_ROOT=$PASS_ROOT
         volumes:
             - mariadb-vol:/var/lib/mariadb
-        ports:
-            - 3306:3306
 
     wordpress:
         container_name: 'wordpress'
         image: 'wordpress:ft_2.0'
         restart: on-failure
+        cpus: 2
         depends_on:
             - mariadb
         build:
             context: requirements/wordpress/
             args:
                 - USER
+                - ADMIN_USER
                 - PASS_USER
                 - PASS_ROOT
                 - DB_NAME
@@ -61,14 +62,13 @@ services:
             - wp-vol:/var/www/html
         networks:
             - inception
-        ports:
-            - 9000:9000
         env_file: .env
 
     nginx:
             container_name: 'nginx'
             image: 'nginx:ft_3.0'
             restart: on-failure
+            cpus: 2
             depends_on:
                 - wordpress
             build:

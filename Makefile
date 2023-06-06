@@ -5,6 +5,7 @@ DOCKER_PATH=${DOCKER_COMP_PATH}/requirements
 DATA_PATH=/home/${USER}/data
 DOCK_COMP=docker compose --file ${DOCKER_COMP_PATH}/${DOCKER_COMP_NAME}
 
+all: build up
 build:
 	${DOCK_COMP} build 
 create:
@@ -19,7 +20,6 @@ up:
 	${DOCK_COMP} up -d
 down:
 	${DOCK_COMP} down
-all: build up
 status:
 	@docker ps
 
