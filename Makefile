@@ -7,6 +7,8 @@ DOCK_COMP=docker compose --file ${DOCKER_COMP_PATH}/${DOCKER_COMP_NAME}
 
 all: build up
 build:
+	mkdir -p ${DATA_PATH}/wordpress
+	mkdir -p ${DATA_PATH}/mariadb
 	${DOCK_COMP} build 
 create:
 	${DOCK_COMP} create
@@ -15,9 +17,7 @@ start:
 stop:
 	${DOCK_COMP} stop
 up:
-	mkdir -p ${DATA_PATH}/wordpress
-	mkdir -p ${DATA_PATH}/mariadb
-	${DOCK_COMP} up -d
+	${DOCK_COMP} up --build -d
 down:
 	${DOCK_COMP} down
 status:

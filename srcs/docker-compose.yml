@@ -39,7 +39,7 @@ services:
                 - PASS_USER=$PASS_USER
                 - PASS_ROOT=$PASS_ROOT
         volumes:
-            - mariadb-vol:/var/lib/mariadb
+            - mariadb-vol:/var/lib/mysql
 
     wordpress:
         container_name: 'wordpress'
