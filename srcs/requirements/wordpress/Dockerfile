@@ -16,7 +16,7 @@ RUN rm -f /var/www/wordpress/wp-config-sample.php
 RUN sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = wordpress:9000/g' /etc/php/7.3/fpm/pool.d/www.conf
 ARG USER
 ARG ADMIN_USER
-ARG WP_PATH
+ARG WP_PATH=/var/www/html
 ARG URL
 RUN adduser --disabled-password "$USER"
 COPY "./create-config.sh" .
