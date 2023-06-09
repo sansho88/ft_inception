@@ -10,6 +10,3 @@ COPY conf/default /etc/nginx/conf.d/nginx.conf
 RUN ln -s /etc/nginx/conf.d/nginx.conf /etc/nginx/sites-enabled/
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
-#
-# FROM debian:buster
-# ENV DEBIAN_FRONTEND noninteractive

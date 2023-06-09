@@ -86,3 +86,4 @@ services:
             networks:
                 - inception
             env_file: .env
+   
